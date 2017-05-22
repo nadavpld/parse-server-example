@@ -51,14 +51,14 @@ app.get('/api/image', function(req, res) {
       //     res.status(200).json(result);    
       //   }
       // });
-    }
-  });
-  var cursor = collection.find({});
+        var cursor = collection.find({});
   cursor.toArray(function(err, result) {
     if(err) {
       res.status(500).send('Database Error');
     }
     res.status(200).json(result);
+  });
+    }
   });
 });
 

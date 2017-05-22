@@ -48,7 +48,7 @@ app.get('/api/image', function(req, res) {
         if(err != null) {
           res.status(500).send('Database Error');
         } else {
-          res.status(200).send(result);    
+          res.status(200).json(result);    
         }
       });
     }

@@ -42,7 +42,7 @@ app.get('/api/image', function(req, res) {
         res.status(500).send('Database Error');
     } else {
       var collection = db.collection('Images');
-      collection.insertOne({'test':'test'}, function(err, result) {
+      collection.find({}, function(err, result) {
         if(err != null) {
           res.status(500).send('Database Error');
         } else {

@@ -51,6 +51,7 @@ app.get('/api/image', function(req, res) {
       });
     }
   });
+  res.status(200).json('test');
 });
 
 app.post('/api/image', function(request, response) {

@@ -6,6 +6,8 @@ var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
 var MongoClient = require('mongodb').MongoClient;
 
+var databaseURI = 'mongodb://heroku_brv90mt5:68jeug151flv5deflfu8sgscrd@ds137121.mlab.com:37121/heroku_brv90mt5';
+
 var api = new ParseServer({
   databaseURI: 'mongodb://heroku_brv90mt5:68jeug151flv5deflfu8sgscrd@ds137121.mlab.com:37121/heroku_brv90mt5',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
@@ -37,7 +39,7 @@ app.get('/', function(req, res) {
 app.get('/api/image', function(req, res) {
   // get pictures from db for user id
   // return the pictures
-  MongoClient.connect(api.databaseURI, function(err, db) {
+  MongoClient.connect(databaseURI, function(err, db) {
     if(err != null) {
         res.status(500).send('Database Error');
     } else {

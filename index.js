@@ -37,19 +37,28 @@ app.get('/', function(req, res) {
 app.get('/api/image', function(req, res) {
   // get pictures from db for user id
   // return the pictures
-  MongoClient.connect('mongodb://heroku_brv90mt5:68jeug151flv5deflfu8sgscrd@ds137121.mlab.com:37121/heroku_brv90mt5', function(err, db) {
+  var collection;
+  var db = MongoClient.connect('mongodb://heroku_brv90mt5:68jeug151flv5deflfu8sgscrd@ds137121.mlab.com:37121/heroku_brv90mt5', function(err, db) {
     if(err != null) {
         res.status(500).send('Database Error');
     } else {
-      var collection = db.collection('Images');
-      collection.find({}, function(err, result) {
-        if(err != null) {
-          res.status(500).send('Database Error');
-        } else {
-          res.status(200).json(result);    
-        }
-      });
+      collection = db.collection('Images');
+      // var collection = db.collection('Images');
+      // collection.find({}, function(err, result) {
+      //   if(err != null) {
+      //     res.status(500).send('Database Error');
+      //   } else {
+      //     res.status(200).json(result);    
+      //   }
+      // });
     }
+  });
+  var cursor = collection.find({});
+  cursor.toArray(function(err, result) {
+    if(err) {
+      res.status(500).send('Database Error');
+    }
+    res.status(200).json(result);
   });
 });
 

@@ -7,7 +7,7 @@ var path = require('path');
 var MongoClient = require('mongodb').MongoClient;
 
 var api = new ParseServer({
-  databaseURI: 'mongodb://kkn:12345@ds137121.mlab.com:37121/heroku_brv90mt5',
+  databaseURI: 'mongodb://heroku_brv90mt5:68jeug151flv5deflfu8sgscrd@ds137121.mlab.com:37121/heroku_brv90mt5',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.APP_ID || 'myAppId',
   masterKey: process.env.MASTER_KEY || '', //Add your master key here. Keep it secret!

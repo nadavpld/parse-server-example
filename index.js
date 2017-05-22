@@ -37,7 +37,20 @@ app.get('/', function(req, res) {
 app.get('/api/image', function(req, res) {
   // get pictures from db for user id
   // return the pictures
-  res.status(200).send('API check');
+  MongoClient.connect(api.databaseURI, function(err, db) {
+    if(err != null) {
+        res.status(500).send('Database Error');
+    } else {
+      var collection = db.collection('Images');
+      collection.find({}, function(err, result) {
+        if(err != null) {
+          res.status(500).send('Database Error');
+        } else {
+          res.status(200).send(result);    
+        }
+      });
+    }
+  });
 });
 
 app.post('/api/image', function(request, response) {

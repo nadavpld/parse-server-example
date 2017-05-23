@@ -43,28 +43,33 @@ app.get('/api/image', function(req, res) {
         res.status(500).send('Database Error');
     } else {
       collection = db.collection('Images');
-      // var collection = db.collection('Images');
-      // collection.find({}, function(err, result) {
-      //   if(err != null) {
-      //     res.status(500).send('Database Error');
-      //   } else {
-      //     res.status(200).json(result);    
-      //   }
-      // });
         var cursor = collection.find({});
-  cursor.toArray(function(err, result) {
-    if(err) {
-      res.status(500).send('Database Error');
-    }
-    res.status(200).json(result);
-  });
+        cursor.toArray(function(err, result) {
+          if(err) {
+            res.status(500).send('Database Error');
+          }
+          res.status(200).json(result);
+        });
     }
   });
 });
 
 app.post('/api/image', function(request, response) {
     var croppedImage = request.body;
-    // save the cropped Image in the database
+    MongoClient.connect('mongodb://heroku_brv90mt5:68jeug151flv5deflfu8sgscrd@ds137121.mlab.com:37121/heroku_brv90mt5', function(err, db) {
+      if(err != null) {
+          res.status(500).send('Database Error');
+      } else {
+        collection = db.collection('Images');
+        collection.insert(croppedImage, function(err, result) {
+            if(err) {
+              res.status(500).send('Database Error');
+            } else {
+              res.status(200).send('Ok');
+            }
+        });
+      }
+    });
 });
 
 app.get('/api/user', function(req, res) {
@@ -74,8 +79,7 @@ app.get('/api/user', function(req, res) {
 });
 
 app.post('/api/user', function(request, response) {
-    var user = request.body;
-    // save the cropped Image in the database
+
 });
 
 var port = process.env.PORT || 1337;

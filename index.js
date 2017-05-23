@@ -62,7 +62,7 @@ app.get('/api/image', function(req, res) {
   });
 });
 
-app.post('/api/image', function(request, response) {
+app.post('/api/image', function(request, res) {
     var croppedImage = request.body;
     MongoClient.connect('mongodb://heroku_brv90mt5:68jeug151flv5deflfu8sgscrd@ds137121.mlab.com:37121/heroku_brv90mt5', function(err, db) {
       if(err != null) {
@@ -86,7 +86,7 @@ app.get('/api/user', function(req, res) {
   res.status(200).send('API check');
 });
 
-app.post('/api/user', function(request, response) {
+app.post('/api/user', function(request, res) {
 
 });
 

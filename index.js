@@ -64,6 +64,7 @@ app.get('/api/image', function(req, res) {
 
 app.post('/api/image', function(request, res) {
     var croppedImage = request.body;
+    console.log('cropped image object : ' + croppedImage);
     MongoClient.connect('mongodb://heroku_brv90mt5:68jeug151flv5deflfu8sgscrd@ds137121.mlab.com:37121/heroku_brv90mt5', function(err, db) {
       if(err != null) {
           res.status(500).send('Database Error');

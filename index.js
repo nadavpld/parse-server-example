@@ -28,8 +28,7 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser({limit: '5mb'}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '5mb'}));
 
 
 // Serve static assets from the /public folder

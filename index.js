@@ -24,12 +24,12 @@ var api = new ParseServer({
 var app = express();
 
 /* Body Parser */
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.json({limit: '16mb'}));
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));

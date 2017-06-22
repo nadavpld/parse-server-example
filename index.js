@@ -21,6 +21,8 @@ var api = new ParseServer({
 // If you wish you require them, you can set them as options in the initialization above:
 // javascriptKey, restAPIKey, dotNetKey, clientKey
 
+var DB_PATH = 'mongodb://heroku_brv90mt5:68jeug151flv5deflfu8sgscrd@ds137121.mlab.com:37121/heroku_brv90mt5';
+
 var app = express();
 
 /* Body Parser */
@@ -47,7 +49,7 @@ app.get('/api/image', function(req, res) {
   // get pictures from db for user id
   // return the pictures
   var collection;
-  var db = MongoClient.connect('mongodb://heroku_brv90mt5:68jeug151flv5deflfu8sgscrd@ds137121.mlab.com:37121/heroku_brv90mt5', function(err, db) {
+  var db = MongoClient.connect(DB_PATH, function(err, db) {
     if(err != null) {
         res.status(500).send('Database Error');
     } else {
@@ -69,7 +71,7 @@ app.post('/api/image', function(request, res) {
     for(var key in croppedImage) {
       console.log('key : ' + key + ' value : ' + croppedImage[key]);
     }
-    MongoClient.connect('mongodb://heroku_brv90mt5:68jeug151flv5deflfu8sgscrd@ds137121.mlab.com:37121/heroku_brv90mt5', function(err, db) {
+    MongoClient.connect(DB_PATH, function(err, db) {
       if(err != null) {
           res.status(500).send('Database Error');
       } else {
@@ -85,14 +87,61 @@ app.post('/api/image', function(request, res) {
     });
 });
 
-app.get('/api/user', function(req, res) {
+app.get('/api/userImages', function(req, res) {
   // get pictures from db for user id
   // return the pictures
-  res.status(200).send('API check');
+  var Id = req.query.userId;
+  MongoClient.connect(DB_PATH, function(err, db) {
+    collection = db.collection('Images');
+    collection.aggregate(
+      [{
+        $match: {userId : Id}
+      },
+      {
+        $sample: {size : 5}
+      }],
+      (err, result) => {
+        if(err) {
+          res.status(500).send('Database Error');
+        } else {
+          res.status(200).json(result);
+        }
+      }
+    );
+  });
+});
+
+app.get('/api/user', function(request, response) {
+  var userId = request.query.userId;
+  MongoClient.connect(DB_PATH, function(err, db) {
+    collection = db.collection('Users');
+    collection.find({'userId': userId}, (err, result)=>{
+      if(err) {
+        res.status(400).send('User was not found');
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  });
 });
 
 app.post('/api/user', function(request, res) {
-
+  // adds a new user / update if exists
+  var user = request.body;
+  MongoClient.connect(DB_PATH, function(err, db) {
+    if(err) {
+      res.status(500).send('Database Error');
+    } else {
+      collection = db.collection('Users');
+      collection.update({'userId': user.userId}, user, {upsert: true}, function(err, result){
+        if(err) {
+          res.status(500).send('Database Error');
+        } else {
+          res.status(200).send('Ok');
+        }
+      });
+    }
+  });
 });
 
 var port = process.env.PORT || 1337;

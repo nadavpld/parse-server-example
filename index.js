@@ -115,7 +115,7 @@ app.get('/api/user', function(request, response) {
   var userId = request.query.userId;
   MongoClient.connect(DB_PATH, function(err, db) {
     collection = db.collection('Users');
-    collection.find({'userId': userId}, (err, result)=>{
+    collection.find({'UserId': UserId}, (err, result)=>{
       if(err) {
         res.status(400).send('User was not found');
       } else {
@@ -133,7 +133,7 @@ app.post('/api/user', function(request, res) {
       res.status(500).send('Database Error');
     } else {
       collection = db.collection('Users');
-      collection.update({'userId': user.userId}, user, {upsert: true}, function(err, result){
+      collection.update({'UserId': user.UserId}, user, {upsert: true}, function(err, result){
         if(err) {
           res.status(500).send('Database Error');
         } else {

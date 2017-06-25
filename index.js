@@ -96,7 +96,7 @@ app.get('/api/userImages', function(req, res) {
     collection = db.collection('Images');
     collection.aggregate(
       [{
-        $match: {UserId : Id, Language : language}
+        $match: {UserId : Id, TranslationLanguage : language}
       },
       {
         $sample: {size : 5}

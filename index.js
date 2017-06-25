@@ -99,6 +99,9 @@ app.get('/api/userImages', function(req, res) {
         $match: {UserId : Id, TranslationLanguage : language}
       },
       {
+        $project: {_id : 0}
+      },
+      {
         $sample: {size : 5}
       }],
       (err, result) => {

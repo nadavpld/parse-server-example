@@ -91,11 +91,12 @@ app.get('/api/userImages', function(req, res) {
   // get pictures from db for user id
   // return the pictures
   var Id = req.query.userId;
+  var language = req.query.language;
   MongoClient.connect(DB_PATH, function(err, db) {
     collection = db.collection('Images');
     collection.aggregate(
       [{
-        $match: {userId : Id}
+        $match: {UserId : Id, Language : language}
       },
       {
         $sample: {size : 5}

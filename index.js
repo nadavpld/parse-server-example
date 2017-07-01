@@ -91,6 +91,7 @@ app.get('/api/userImages', function(req, res) {
   // get pictures from db for user id
   // return the pictures
   var Id = req.query.userId;
+  console.log('User Id : ' + Id);
   var language = req.query.language;
   MongoClient.connect(DB_PATH, function(err, db) {
     collection = db.collection('Images');
@@ -105,6 +106,7 @@ app.get('/api/userImages', function(req, res) {
         if(err) {
           res.status(500).send('Database Error');
         } else {
+          console.log(result);
           res.status(200).json(result);
         }
       }

@@ -114,17 +114,13 @@ app.get('/api/userImages', function(req, res) {
 
 app.get('/api/user', function(request, response) {
   var userId = request.query.userId;
-  console.log('User ID : ' + userId);
   MongoClient.connect(DB_PATH, function(err, db) {
     collection = db.collection('Users');
     collection.findOne({'UserId': userId}, function(err, result){
       if(err) {
         response.status(400).send('User was not found');
       } else {
-        for(var key in result) {
-          console.log('key : ' + key + ' data : ' + result[key]);
-        }
-        response.status(200).send(result[0].Language);
+        response.status(200).send(result.Language);
       }
     });
   });

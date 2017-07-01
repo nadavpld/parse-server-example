@@ -122,7 +122,7 @@ app.get('/api/user', function(request, response) {
         response.status(400).send('User was not found');
       } else {
         for(var key in result) {
-          console.log('key : ' + result[key]);
+          console.log('key : ' + key + ' data : ' + result[key]);
         }
         response.status(200).send(result[0].Language);
       }

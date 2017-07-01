@@ -119,9 +119,9 @@ app.get('/api/user', function(request, response) {
     collection = db.collection('Users');
     collection.find({'UserId': userId}, (err, result)=>{
       if(err) {
-        res.status(400).send('User was not found');
+        response.status(400).send('User was not found');
       } else {
-        res.status(200).json(result);
+        response.status(200).json(result);
       }
     });
   });

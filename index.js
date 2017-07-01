@@ -121,7 +121,7 @@ app.get('/api/user', function(request, response) {
       if(err) {
         response.status(400).send('User was not found');
       } else {
-        response.status(200).json(result);
+        response.status(200).send(result);
       }
     });
   });

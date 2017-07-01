@@ -121,8 +121,8 @@ app.get('/api/user', function(request, response) {
       if(err) {
         response.status(400).send('User was not found');
       } else {
-        console.log("Result : " + result.Language);
-        response.status(200).send(result.Language);
+        console.log("Result : " + result["Language"]);
+        response.status(200).send(result["Language"]);
       }
     });
   });

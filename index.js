@@ -114,6 +114,7 @@ app.get('/api/userImages', function(req, res) {
 
 app.get('/api/user', function(request, response) {
   var userId = request.query.userId;
+  console.log('User ID : ' + userId);
   MongoClient.connect(DB_PATH, function(err, db) {
     collection = db.collection('Users');
     collection.find({'UserId': UserId}, (err, result)=>{

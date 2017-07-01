@@ -117,7 +117,7 @@ app.get('/api/user', function(request, response) {
   console.log('User ID : ' + userId);
   MongoClient.connect(DB_PATH, function(err, db) {
     collection = db.collection('Users');
-    collection.find({'UserId': userId}, function(err, result){
+    collection.findOne({'UserId': userId}, function(err, result){
       if(err) {
         response.status(400).send('User was not found');
       } else {
